@@ -1,1 +1,2 @@
-﻿
+﻿SQLconnectionString: Data Source=SENA-KiM;Initial Catalog=test-LSIoT;Integrated Security=True;User ID=asadmin;Password=Bespin@01
+CSVfolderPath: C:\Users\sena.kim\Documents\Projects\LS산전\Reading csv to message\MC2LINE_2018-08-17_A
