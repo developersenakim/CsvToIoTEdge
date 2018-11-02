@@ -10,14 +10,13 @@ namespace CsvToIoTEdge
     {
         static void Main(string[] args)
         {
+            Application application = new Application();
+            application.Init();
+            application.Process();
 
-            Pretask pretask = new Pretask();
-            pretask.Initialization();
+          
 
-
-           //ThreadPoolClass threadPoolClass = new ThreadPoolClass();
-            
-           // threadPoolingEvent.Run();
+                       
 
             Console.Read();
             

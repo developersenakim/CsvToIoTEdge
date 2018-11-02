@@ -4,9 +4,9 @@ using System.Diagnostics;
 
 namespace CsvToIoTEdge
 {
-    class ThreadPoolClass
+    public class ThreadPoolClass
     {
-        static void Run()
+        public static void Run()
         {
 
 
@@ -50,6 +50,13 @@ namespace CsvToIoTEdge
 
         static void Process(object callback)
         {
+
+        }
+
+
+        public void Task()
+        {
+          
 
         }
     }
