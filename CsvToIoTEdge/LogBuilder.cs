@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-
+using System.Threading;
+using System.Diagnostics;
 
 namespace CsvToIoTEdge
 {
@@ -10,25 +11,10 @@ namespace CsvToIoTEdge
     {
         static public void DrawProgressBar(int progress_current, int progress_max)
         {
-            Console.CursorVisible = false;
-            int temptop = Console.CursorTop + 1;
-            Console.SetCursorPosition(1, temptop);
-            for (int i = 0; i < progress_max + 1; i++)
+            using (var progress = new ProgressBar())
             {
-                for (int j = 0; j < i; j++)
-                {
-                    Console.Write("■");
-                }
-                Console.Write(i + "/" + progress_max);
-                if (i == progress_max)
-                {
-                    Console.Write("\n\n");
-                }
-                else
-                {
-                    Console.SetCursorPosition(1, temptop);
-                    System.Threading.Thread.Sleep(1000);
-                }
+                progress.Report((double)progress_current / progress_max);
+                Thread.Sleep(100);
             }
         }
         static public void WriteErrorMessage(string message)

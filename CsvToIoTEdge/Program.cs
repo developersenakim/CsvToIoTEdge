@@ -13,10 +13,19 @@ namespace CsvToIoTEdge
             Application application = new Application();
             application.Init();
             application.Process();
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    LogBuilder.DrawProgressBar(i, 10);
 
-          
+            //    if (i == 9)
+            //    {
+            //        Console.Write("Done ");
+            //    }
+            //}
 
-                       
+
+
+
 
             Console.Read();
             

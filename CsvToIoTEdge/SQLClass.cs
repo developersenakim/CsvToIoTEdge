@@ -66,13 +66,13 @@ namespace CsvToIoTEdge
         public void InsertRawDataInSQL(string insertingvalues, string tablename)
         {
             //string temp_InsertRawDataToSQLstring = $"INSERT table {tablename}(X1 DOUBLE PRECISION, X2 DOUBLE PRECISION, X3 DOUBLE PRECISION, X4 DOUBLE PRECISION);";
-            string temp_InsertRawDataToSQLstring = $"INSERT INTO {tablename}" + $"VALUES({insertingvalues})";
+            string temp_InsertRawDataToSQLstring = $"INSERT INTO {tablename} VALUES({insertingvalues});";
 
             string temp_errormessageString = "Failed inserting into the table";
             bool temp_isProcessSucceeded = ProcessSQL(temp_InsertRawDataToSQLstring, temp_errormessageString);
             if (temp_isProcessSucceeded)
             {
-                LogBuilder.WriteMessage("The data'" + tablename + "' created");
+               // LogBuilder.WriteMessage($"({insertingvalues})");
             }
         }
         public bool ProcessSQL(string commandstring, string errormessage)
@@ -86,21 +86,14 @@ namespace CsvToIoTEdge
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(commandstring, connection))
                     {
-                        if (commandstring.StartsWith("INSERT"))
-                        {
-                            command.Parameters.AddWithValue("@X1", "test123"); // these are already string
-                            command.Parameters.AddWithValue("@X2", "test234");
-                            command.Parameters.AddWithValue("@X3", "test345");
-                            command.Parameters.AddWithValue("@X3", "test345");
-                        }
                         command.ExecuteNonQuery();
-                        if(commandstring.StartsWith("select"))
+                        if(commandstring.StartsWith("select")==true)
                         {
                             using (SqlDataReader reader = command.ExecuteReader())
                             {
                                 if (reader.Read())
                                 {
-                                    Console.WriteLine(reader.GetString(0));
+                                  //  Console.WriteLine(reader.GetString(0));
                                     temp_processComplete = true;
                                 }
                                 else

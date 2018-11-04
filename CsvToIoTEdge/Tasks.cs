@@ -31,15 +31,11 @@ namespace CsvToIoTEdge
             SQLClass sqlclass = new SQLClass(GetConnectionString());  
             sqlclass.CheckSqlConnection();
 
+
+            //do while task complete check. 
             Tasks tasks = new Tasks();
             tasks.s_filepath = this.SetfilepathAndDeQue(ref tasks);
-            tasks.Process(sqlclass);
-
-           // LogBuilder.WriteMessage(tasks.s_filename);
-           
-            
-
-
+            tasks.Process(sqlclass);   
         }
 
         public string GetConnectionString()
@@ -226,21 +222,33 @@ namespace CsvToIoTEdge
                 string temp_filenameString = s_filename.Replace(".csv","");
                 temp_filenameString = temp_filenameString.Replace("-", "_");
                 //SQL check if table exist and create table if it does not exist
+                LogBuilder.WriteMessage("About the table <" + temp_filenameString + ">");
                 if (!sqlclass.CheckTableNameInSQL(temp_filenameString))
                 {
-                    LogBuilder.WriteMessage("The table'" + temp_filenameString + "' does not exist" + "\nCreating the table.");
+                    LogBuilder.WriteMessage("The table does not exist");
                     sqlclass.CreateTableInSQL(temp_filenameString);
                 }
-                else //Insrts data here to the table. 
-                {
-                    LogBuilder.WriteMessage("The table'" + temp_filenameString + "' already exist" + "\nInserting Data.");
+                //Check if table exist Insert Data
+                if (sqlclass.CheckTableNameInSQL(temp_filenameString))
+                {                    
+                    LogBuilder.WriteMessage("The table already exist");
                     string[] csvRows = System.IO.File.ReadAllLines(s_filepath);
-                    // Assign list of columns to List variable . 
+                    double max_number = csvRows.Length - 1;
+                    Console.Write("Inserting Data into the table ");
                     for (int i = 0; i < csvRows.Length; i++)
                     {
+                        double percentage = (double)(((i ) * 100) / max_number);
+                        //LogBuilder.WriteMessage(" " + (int)percentage);
                         sqlclass.InsertRawDataInSQL(csvRows[i], temp_filenameString);
+                      //  LogBuilder.DrawProgressBar(percentage, 100); //thread this
                     }
                 }
+                //check if all data has been filled
+                // move file to diffrent folder
+                // get AVG STANDARD...
+                // Assign to variables of datainfo
+                // Create new Table if the table exists fill it up with data.
+                LogBuilder.WriteMessage(" Done ");
             }
         }
 
