@@ -33,9 +33,13 @@ namespace CsvToIoTEdge
 
 
             //do while task complete check. 
-            Tasks tasks = new Tasks();
+            Tasks tasks = new Tasks();   
             tasks.s_filepath = this.SetfilepathAndDeQue(ref tasks);
-            tasks.Process(sqlclass);   
+            tasks.Process(sqlclass);
+
+            Tasks task1 = new Tasks();
+            task1.s_filepath = this.SetfilepathAndDeQue(ref task1);
+            task1.Process(sqlclass);
         }
 
         public string GetConnectionString()
@@ -235,14 +239,23 @@ namespace CsvToIoTEdge
                     string[] csvRows = System.IO.File.ReadAllLines(s_filepath);
                     double max_number = csvRows.Length - 1;
                     Console.Write("Inserting Data into the table ");
+                    //ProgressBar probressbar = new ProgressBar();
+                    //Thread thread = new Thread(LogBuilder.DrawProgressBar((int)percentage, 100));
+
+                    //     LogBuilder.DrawProgressBar((int)percentage, 100); //thread this
+                    //Thread progressbar_thread = new Thread()
+                    //     Thread obj = new Thread(Process);
+                    //obj.Start();
                     for (int i = 0; i < csvRows.Length; i++)
                     {
                         double percentage = (double)(((i ) * 100) / max_number);
                         //LogBuilder.WriteMessage(" " + (int)percentage);
                         sqlclass.InsertRawDataInSQL(csvRows[i], temp_filenameString);
-                      //  LogBuilder.DrawProgressBar(percentage, 100); //thread this
+                        
                     }
                 }
+
+          
                 //check if all data has been filled
                 // move file to diffrent folder
                 // get AVG STANDARD...

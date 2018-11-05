@@ -23,7 +23,9 @@ namespace CsvToIoTEdge
             //    }
             //}
 
-
+            //ThreadPoolClass threadpoolclass = new ThreadPoolClass();
+            //threadpoolclass.
+            ThreadPoolClass.Run();
 
 
 

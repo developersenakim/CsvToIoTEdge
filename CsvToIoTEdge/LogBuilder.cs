@@ -14,7 +14,7 @@ namespace CsvToIoTEdge
             using (var progress = new ProgressBar())
             {
                 progress.Report((double)progress_current / progress_max);
-                Thread.Sleep(100);
+                Thread.Sleep(1);
             }
         }
         static public void WriteErrorMessage(string message)
